@@ -14,7 +14,10 @@ When I analyze any dataset I look for insights; those insights may raise thought
 - [INS10] Distance is highly correlated with posted_rate. A very strong
 feature
 - [INS11] date plays a role in posted_rates, however it is not useful as a feature
-
+- [INS12] posted_rate is heavily skewed to the right
+- [INS13] We need to deal with outliersi n posted rates, it was detected high expensive prices for short distances or vice versa.
+- [INS14] Equipment has a small impact in posted_price
+ 
 
 ## Thoughts to Check
 - [INS1] -> [THOUGHT1]: We need as well to check the validation about the existence of same cities, or new cities were added to enusre no data shifts and consistency across train-test and validation
@@ -23,9 +26,12 @@ feature
 - [INS8] -> [THOUGH4] Check whether that capping will be highly impactful ?
 - [THOUGHT5] What Possible imputation we could do for missing values ? we could impute based on the route
 - [THOUGHT6] We could use date for the k fold splitter
+- [INS12] -> [THOUGHT7] Predict log on posted_rate
+- [INS13 | INS14] -> [THOUGHT8] Fit a least square methods with distance and posted_price, since distance is strongly correlated, and use equipment with least posted_pricea as baseline for other equipment to remove outliers. find ratio of actual_price and predicated price. then remove from train data posted_price with a ratio lower than 0.5 or higher than 2 
 
 ## Conclusions
 - [CONC1] Drop pickup,delivery,longitude,latitude
 - [CONC2] Negative weight value seems like wrong input, use abs()
 - [CONC3] Capping is about 2.5% of train-test and val as well, i think we can keep it as we may need to learn that capping, and the percentage is very small
 - [CONC4] Drop date as feature but use if for k fold training
+- [CONC5] use date to split into folds
